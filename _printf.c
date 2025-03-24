@@ -1,47 +1,47 @@
 #include "main.h"
 
 /**
- * handle_specifier - Handles a single format specifier
- * @spec: The format specifier (e.g., 'c', 's', 'd', etc.)
+ * handle_format - Handles a single format specifier
+ * @format: Format string
+ * @i: Pointer to the current index
  * @args: The va_list of arguments
  *
- * Return: Number of characters printed for this specifier
+ * Return: The number of characters printed for this specifier
  */
-int handle_specifier(char spec, va_list args)
+int handle_format(const char *format, int *i, va_list args)
 {
-	switch (spec)
+	int count = 0;
+
+	switch (format[*i + 1])
 	{
 	case 'c':
-		return (print_char(args));
+		count += print_char(args);
+		break;
 	case 's':
-		return (print_string(args));
+		count += print_string(args);
+		break;
 	case 'd':
 	case 'i':
-		return (print_int(args));
-	case 'u':
-		return (print_unsigned(args));
-	case 'o':
-		return (print_octal(args));
-	case 'x':
-		return (print_hex(args));
-	case 'X':
-		return (print_HEX(args));
-	case 'p':
-		return (print_address(args));
+		count += print_int(args);
+		break;
+	/* لو عندك صيغ أخرى مثل %u, %x, إلخ، أضفها هنا */
 	case '%':
-		return (_putchar('%'));
+		count += _putchar('%');
+		break;
 	default:
-		_putchar('%');
-		_putchar(spec);
-		return (2);
+		count += _putchar('%');
+		count += _putchar(format[*i + 1]);
+		break;
 	}
+	*i += 1;
+	return (count);
 }
 
 /**
- * _printf - Custom printf function
+ * _printf - A custom printf-like function
  * @format: The format string
  *
- * Return: Total number of characters printed
+ * Return: The total number of characters printed
  */
 int _printf(const char *format, ...)
 {
@@ -52,6 +52,7 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(args, format);
+
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -61,8 +62,7 @@ int _printf(const char *format, ...)
 				va_end(args);
 				return (-1);
 			}
-			count += handle_specifier(format[i + 1], args);
-			i++;
+			count += handle_format(format, &i, args);
 		}
 		else
 		{
@@ -70,6 +70,7 @@ int _printf(const char *format, ...)
 		}
 		i++;
 	}
+
 	va_end(args);
 	return (count);
 }
