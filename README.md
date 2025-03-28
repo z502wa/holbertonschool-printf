@@ -1,72 +1,76 @@
-.TH _PRINTF 3 "March 2025" "Holberton School" "C Library Functions"
+# _printf
 
-.SH NAME
-_printf \- Custom implementation of the standard printf function
+A custom implementation of the standard C `printf` function, created as part of the Holberton School low-level programming curriculum.
 
-.SH SYNOPSIS
-.B #include "main.h"
-.br
-.B int _printf(const char *format, ...);
+---
 
-.SH DESCRIPTION
-The
-.B _printf()
-function is a simplified re-implementation of the standard C library's printf function. It produces formatted output by parsing a format string and replacing specific format specifiers with provided values.
+## Manual Page for `_printf`
 
-Currently, the supported conversion specifiers are:
+### 1. NAME
+**_printf** - Custom implementation of the standard `printf` function.
 
-.TP
-.B %c
-Prints a single character.
+---
 
-.TP
-.B %s
-Prints a string.
+### 2. SYNOPSIS
+```c
+#include "main.h"
 
-.TP
-.B %%
-Prints a literal percent sign.
+int _printf(const char *format, ...);
+```
 
-Additional specifiers such as
-.B %d, %i, %u, %o, %x, %X, %p
-may also be supported depending on the project level.
+---
 
-Unrecognized format specifiers will be printed as literal characters, starting with '%'.
+### 3. DESCRIPTION
+The `_printf()` function is a simplified re-implementation of the standard C `printf` function. It takes a format string and replaces specific format specifiers with values provided through variadic arguments using macros from `<stdarg.h>`.
 
-.SH RETURN VALUE
-Upon successful completion, the
-.B _printf()
-function returns the total number of characters printed (excluding the null byte).
+**Currently supported conversion specifiers:**
+- `%c` : Prints a single character.
+- `%s` : Prints a string.
+- `%%` : Prints a literal percent sign.
+- `%d` : Prints a signed decimal integer.
+- `%i` : Prints a signed decimal integer.
 
-If
-.I format
-is NULL or invalid, the function returns -1.
+**Not supported:**
+- Flags (e.g., `+`, `-`, `#`)
+- Field width
+- Precision
+- Length modifiers (e.g., `l`, `h`)
 
-.SH EXAMPLES
-.B Example 1:
-.br
+Unrecognized format specifiers will be printed as a literal combination of `%` and the unknown character.
+
+---
+
+### 4. RETURN VALUE
+- Returns the total number of characters printed (excluding the null byte).
+- Returns `-1` if the format string is `NULL` or if an incomplete format specifier is encountered.
+
+---
+
+### 5. EXAMPLES
+
+```c
 _printf("Hello, %s!\n", "Holberton");
-.br
-Output: "Hello, Holberton!"
+// Output: Hello, Holberton!
 
-.B Example 2:
-.br
 _printf("Character: %c\n", 'A');
-.br
-Output: "Character: A"
+// Output: Character: A
 
-.B Example 3:
-.br
-_printf("100%% sure\n");
-.br
-Output: "100% sure"
+_printf("Progress: 100%% complete\n");
+// Output: Progress: 100% complete
 
-.SH AUTHOR
-Written by Suhail Alaboud and Mohammed Alzahrani as part of the Holberton School C programming curriculum.
+_printf("Score: %d out of %i\n", 95, 100);
+// Output: Score: 95 out of 100
+```
 
-.SH SEE ALSO
-.BR printf (3),
-.BR write (2),
-.BR va_start (3),
-.BR va_arg (3),
-.BR va_end (3)
+---
+
+### 6. AUTHOR
+Developed by:
+- Suhail Alaboud  
+- Mohammed Alzahrani  
+
+As part of the Holberton School C programming curriculum.
+
+---
+
+
