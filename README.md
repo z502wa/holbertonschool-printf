@@ -1,77 +1,72 @@
-.\" *********************************
-.\" man page for _printf (section 3)
-.\" *********************************
 .TH _PRINTF 3 "March 2025" "Holberton School" "C Library Functions"
+
 .SH NAME
-_printf \- produce output according to a format
+_printf \- Custom implementation of the standard printf function
+
 .SH SYNOPSIS
-.B #include <main.h>
-.sp
+.B #include "main.h"
+.br
 .B int _printf(const char *format, ...);
+
 .SH DESCRIPTION
 The
 .B _printf()
-function produces output according to a format string,
-which is composed of zero or more directives.
-The directives are used to specify how
-arguments (provided after the format string) are converted for output.
-.sp
-Currently supported conversion specifiers are:
-.RS 4
-.IP \fB%c\fR
+function is a simplified re-implementation of the standard C library's printf function. It produces formatted output by parsing a format string and replacing specific format specifiers with provided values.
+
+Currently, the supported conversion specifiers are:
+
+.TP
+.B %c
 Prints a single character.
-.IP \fB%s\fR
-Prints a string of characters.
-.IP \fB%%\fR
-Prints a literal percent sign (\fB%\fR).
-.IP \fB%d\fR, \fBi\fR
-Prints signed decimal integers.
-.RE
 
-Unrecognized specifiers are printed literally as "%x", where x
-is the unrecognized specifier.
+.TP
+.B %s
+Prints a string.
 
-The
+.TP
+.B %%
+Prints a literal percent sign.
+
+Additional specifiers such as
+.B %d, %i, %u, %o, %x, %X, %p
+may also be supported depending on the project level.
+
+Unrecognized format specifiers will be printed as literal characters, starting with '%'.
+
+.SH RETURN VALUE
+Upon successful completion, the
 .B _printf()
-function returns the number of characters printed (excluding
-the terminating null byte used to end output to strings).
+function returns the total number of characters printed (excluding the null byte).
 
 If
 .I format
-is NULL, the function returns \-1.
-
-.SH RETURN VALUE
-Upon successful return, the
-.B _printf()
-function returns the number of characters printed.
-If an output error is encountered, a negative value is returned.
+is NULL or invalid, the function returns -1.
 
 .SH EXAMPLES
-.nf
-#include "main.h"
+.B Example 1:
+.br
+_printf("Hello, %s!\n", "Holberton");
+.br
+Output: "Hello, Holberton!"
 
-int main(void)
-{
-    int len;
+.B Example 2:
+.br
+_printf("Character: %c\n", 'A');
+.br
+Output: "Character: A"
 
-    len = _printf("Hello, %s!\\n", "World");
-    /* prints: Hello, World!
-       len should be 13 */
-
-    _printf("Number: %d\\n", 98);
-    /* prints: Number: 98 */
-
-    return (0);
-}
-.fi
-
-.SH SEE ALSO
-printf(3)
+.B Example 3:
+.br
+_printf("100%% sure\n");
+.br
+Output: "100% sure"
 
 .SH AUTHOR
-Written by the Holberton School team as part of the C curriculum.
+Written by Suhail Alaboud and Mohammed Alzahrani as part of the Holberton School C programming curriculum.
 
-.SH BUGS
-No known bugs at this time.
-
-.\" End of man page
+.SH SEE ALSO
+.BR printf (3),
+.BR write (2),
+.BR va_start (3),
+.BR va_arg (3),
+.BR va_end (3)
